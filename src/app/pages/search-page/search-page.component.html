@@ -1,0 +1,32 @@
+<div class="container pb-5">
+  <h1 class="text-center my-5">Search for: <strong>{{ query() }}</strong></h1>
+  <hr />
+  @if (searchRequestStatus() === RequestStatus.SUCCESS) {
+  <app-movies-catalog [movies]="searchResults()" />
+  } @else {
+  <app-movies-catalog-skeleton [count]="20" />
+  }
+  <!-- <app-movie-list [movies]="searchResults()" [isLoading]="searchRequestStatus() === RequestStatus.LOADING" /> -->
+  @if (searchTotalPages() > 1) {
+  <div class="mt-3 d-flex justify-content-between">
+    <span>{{ searchTotalResults() }} items</span>
+    <div class="align-items-center d-flex gap-3">
+      <span>Page {{ page() }} of {{ searchTotalPages() }}</span>
+      <nav>
+        <ul class="pagination my-0">
+          <li class="page-item" [class.disabled]="!enabledPrevPage()" (click)="handleClickPrevPage()">
+            <button class="page-link" [disabled]="!enabledPrevPage()">
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="!enabledNextPage()" (click)="handleClickNextPage()">
+            <button class="page-link" [disabled]="!enabledNextPage()">
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  }
+</div>

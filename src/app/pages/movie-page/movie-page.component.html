@@ -1,0 +1,48 @@
+@switch (movieRequestStatus()) {
+@case (RequestStatus.LOADING) {
+<div class="hero">
+  <div class="hero__content">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+}
+@case (RequestStatus.SUCCESS) {
+<div class="hero" [style.background-image]="'url(' + tmdbImageHelper.getBackdropUrl(movie()!.backdrop_path) + ')'">
+  <div class="hero__content">
+    <img class="img-fluid rounded mx-auto d-block poster" [src]="tmdbImageHelper.getPosterUrl(movie()!.poster_path, 'w780')" />
+  </div>
+</div>
+<div class="container">
+  <h1 class="text-center my-5">{{ movie()!.title }}</h1>
+  <div class="row pb-5">
+    <div class="col-md-6">
+      <h2>Overview</h2>
+      <p>{{ movie()!.overview }}</p>
+    </div>
+    <div class="col-md-6">
+      <h2>Details</h2>
+      <ul class="list-group">
+        <li class="list-group-item">Release Date: {{ movie()!.release_date | date: 'dd/MM/YYYY' }}</li>
+        <li class="list-group-item">Rating: {{ movie()!.vote_average | number: '1.0-1' }}</li>
+        <li class="list-group-item">Vote Count: {{ movie()!.vote_count }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+}
+}
+
+@if (movieRecommendationsRequestStatus() !== RequestStatus.IDLE) {
+<div class="container mb-5">
+  <h2 class="mb-3">Recommendations</h2>
+  <div class="row gy-3">
+    @if (movieRecommendationsRequestStatus() === RequestStatus.LOADING) {
+    <app-movies-catalog-skeleton [count]="4" />
+    } @else {
+    <app-movies-catalog [movies]="movieRecommendations()" />
+    }
+  </div>
+</div>
+}

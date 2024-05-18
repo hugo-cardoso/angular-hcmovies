@@ -1,0 +1,36 @@
+@if (movie) {
+<div class="card">
+  @defer(on viewport) {
+  <img [src]="tmdbImageHelper.getPosterUrl(movie.poster_path)" class="card-img-top cover">
+  } @placeholder {
+  <div class="cover"></div>
+  }
+  <div class="card-body content">
+    <h5 class="card-title">{{movie.title}}</h5>
+    <div>
+      <p class="card-text">{{movie.overview}}
+      </p>
+      <a [routerLink]="['/movies', movie.id]" class="btn btn-primary">View</a>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="card" aria-hidden="true">
+  <div class="cover"></div>
+  <div class="card-body content">
+    <div class="h5 card-title placeholder-glow">
+      <span class="placeholder col-6"></span>
+    </div>
+    <div>
+      <p class="card-text placeholder-glow">
+        <span class="placeholder col-7"></span>
+        <span class="placeholder col-4"></span>
+        <span class="placeholder col-4"></span>
+        <span class="placeholder col-6"></span>
+        <span class="placeholder col-8"></span>
+      </p>
+      <a class="btn btn-primary disabled placeholder col-3" aria-disabled="true"></a>
+    </div>
+  </div>
+</div>
+}

@@ -1,0 +1,14 @@
+@if (nowPlayingMovie()) {
+<app-movie-hero [movie]="nowPlayingMovie()!" />
+} @else {
+<div class="hero-skeleton"></div>
+}
+
+<div class="container my-5">
+  <h2 class="mb-3">Now Playing</h2>
+  @if (nowPlayingMoviesRequestStatus() === RequestStatus.SUCCESS) {
+  <app-movies-catalog [movies]="nowPlayingMovies().slice(1, 9)" />
+  } @else {
+  <app-movies-catalog-skeleton [count]="8" />
+  }
+</div>
